@@ -1,0 +1,50 @@
+[
+	{
+		"id": "leavehouse",
+		"executionPaths": [
+			{
+				"time": 2.9
+			}
+		]
+	},
+	{
+		"id": "kokirisword",
+		"name": "Kokiri Sword",
+		"executionPaths": [
+			{
+				"dependencies": [ "leavehouse" ],
+				"time": 0.6
+			}
+		]
+	},
+	{
+		"id": "dekushield",
+		"name": "Deku Shield",
+		"executionPaths": [
+			{
+				"dependencies": [ "leavehouse" ],
+				"time": 1
+			}
+		]
+	},
+	{
+		"id": "enterdeku",
+		"name": "Enter Deku Tree",
+		"executionPaths": [
+			{
+				"dependencies": [ "kokirisword", "dekushield" ],
+				"time": 1.8
+			}
+		]
+	},
+	{
+		"id": "fairyslingshot",
+		"name": "FairySlingshot",
+		"executionPaths": [
+			{
+				"dependencies": [ "enterdeku" ],
+				"time": 2
+			}
+		]
+	}
+]
