@@ -39,7 +39,7 @@
 	},
 	{
 		"id": "fairyslingshot",
-		"name": "FairySlingshot",
+		"name": "Fairy Slingshot",
 		"executionPaths": [
 			{
 				"dependencies": [ "enterdeku" ],
