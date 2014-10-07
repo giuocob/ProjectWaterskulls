@@ -21,21 +21,24 @@ function run(cb) {
 	var itemCount = 100;
 	var itemListMap = {};
 	for(var i=0; i<itemCount; i++) {
-		var item;
+		var item, itemId;
 		do {
 			item = {
 				x: getX(),
 				y: getY()
 			};
-			item.id = item.x + '-' + item.y;
 			item.name = '(' + item.x + ', ' + item.y + ')';
-		} while(itemListMap[item.id]);   // Ensure uniqueness
-		itemListMap[item.id] = item;
+			itemId = item.x + '-' + item.y;
+		} while(itemListMap[itemId]);   // Ensure uniqueness
+		itemListMap[itemId] = item;
 	}
 
 	var itemList = [];
+	var idCounter = 0;
 	Object.keys(itemListMap).forEach(function(itemId) {
 		itemList.push(itemListMap[itemId]);
+		itemListMap[itemId].id = idCounter.toString();
+		idCounter++;
 	});
 	fs.writeFile(path + '/' + filename, JSON.stringify(itemList,null,4), cb);
 }
