@@ -1,0 +1,13 @@
+{
+	"name": "waterskulls",
+	"version": "0.0.1",
+	"description": "New, experimental version of SpeedRunsLive Bingo",
+	"author": {
+		"name": "giuocob",
+		"email": "pentameterpete@gmail.com"
+	},
+	"main": "./waterskullls.js",
+	"devDependencies": {
+		"minimist": "1.1.0"
+	}
+}
