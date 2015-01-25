@@ -6,7 +6,10 @@
 		"name": "giuocob",
 		"email": "pentameterpete@gmail.com"
 	},
-	"main": "./waterskullls.js",
+	"main": "./waterskulls.js",
+	"dependencies": {
+		"seedrandom": "2.3.11"
+	},
 	"devDependencies": {
 		"minimist": "1.1.0"
 	}
