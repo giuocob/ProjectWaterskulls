@@ -27,7 +27,9 @@ function run(cb) {
 				x: getX(),
 				y: getY()
 			};
-			item.name = '(' + item.x + ', ' + item.y + ')';
+			item.payload = {
+				name: '(' + item.x + ', ' + item.y + ')'
+			};
 			itemId = item.x + '-' + item.y;
 		} while(itemListMap[itemId]);   // Ensure uniqueness
 		itemListMap[itemId] = item;

@@ -8,7 +8,9 @@
 		]
 	}, {
 		"id": "kokirisword",
-		"name": "Kokiri Sword",
+		"payload": {
+			"name": "Kokiri Sword"
+		},
 		"executionPaths": [
 			{
 				"dependencies": [ "leavehouse" ],
@@ -17,7 +19,9 @@
 		]
 	}, {
 		"id": "dekushield",
-		"name": "Deku Shield",
+		"payload": {
+			"name": "Deku Shield"
+		},
 		"executionPaths": [
 			{
 				"dependencies": [ "leavehouse" ],
@@ -26,7 +30,9 @@
 		]
 	}, {
 		"id": "enterdeku",
-		"name": "Enter Deku Tree",
+		"payload": {
+			"name": "Enter Deku Tree"
+		},
 		"executionPaths": [
 			{
 				"dependencies": [ "kokirisword", "dekushield" ],
@@ -35,7 +41,9 @@
 		]
 	}, {
 		"id": "fairyslingshot",
-		"name": "Fairy Slingshot",
+		"payload": {
+			"name": "Fairy Slingshot"
+		},
 		"executionPaths": [
 			{
 				"dependencies": [ "enterdeku" ],

@@ -68,7 +68,9 @@ function getFullRoute(itemList, goalIds, cb) {
 	// bestTime and bestPermutation contain the winners
 	var goals = [];
 	bestPermutation.forEach(function(permutationIndex) {
-		goals.push(itemMap[goalIds[permutationIndex]].name);
+		var payload = itemMap[goalIds[permutationIndex]].payload || {};
+		payload.id = itemMap[goalIds[permutationIndex]].id;
+		goals.push(payload);
 	});
 	return cb(null, {
 		goals: goals,

@@ -8,8 +8,9 @@ function preprocess(itemList, cb) {
 		if(item.id.length === 0 || item.id[0] == '_') return cb(new Error(item.id + ' is a reserved keyword'));
 		if(validated[item.id]) return cb(new Error('Nonunique item id: ' + item.id));
 		var itemObject = {};
-		if(item.name && typeof item.name != 'string') return cb(new Error('Item name must be a string'));
-		itemObject.name = item.name || item.id;
+		itemObject.payload = item.payload || {};
+		if(typeof itemObject.payload != 'object') return cb(new Error('Data payload must be an object'));
+		itemObject.payload.id = item.id;
 		if(!item.executionPaths || !Array.isArray(item.executionPaths) || item.executionPaths.length === 0) {
 			return cb(new Error('Missing execution paths array on item with id: ' + item.id));
 		}
@@ -101,7 +102,7 @@ function getFullRoute(rawItemList, goalIds, cb) {
 		var retObject = { goals: [], time: 0 };
 		Object.keys(route).forEach(function(goalId) {
 			if(goalId[0] == '_') return;
-			retObject.goals.push(itemList[goalId].name);
+			retObject.goals.push(itemList[goalId].payload);
 			retObject.time += itemList[goalId].executionPaths[0].time;
 		});
 
