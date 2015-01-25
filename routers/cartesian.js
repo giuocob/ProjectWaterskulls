@@ -1,7 +1,16 @@
 // This is meant to be run on the output up generate-cartesian-itemlist.
 // Its purpose is to be a simple, accurate, fast router to test card generators.
 
-function getFullRoute(itemList, goalIds, cb) {
+var Router = require('./router');
+var util = require('util');
+
+var CartesianRouter = function(itemList) {
+	Router.call(this, itemList);
+};
+util.inherits(CartesianRouter, Router);
+
+CartesianRouter.prototype.getFullRoute = function(goalIds) {
+	var itemList = this.itemList;
 	var itemMap = {};
 	itemList.forEach(function(item) {
 		itemMap[item.id] = item;
@@ -62,7 +71,7 @@ function getFullRoute(itemList, goalIds, cb) {
 			current = current.slice(0,currentIndex+1).concat(current.slice(currentIndex+1).sort());
 		}
 	} catch(error) {
-		return cb(error);
+		throw error;
 	}
 
 	// bestTime and bestPermutation contain the winners
@@ -72,18 +81,15 @@ function getFullRoute(itemList, goalIds, cb) {
 		payload.id = itemMap[goalIds[permutationIndex]].id;
 		goals.push(payload);
 	});
-	return cb(null, {
+	return {
 		goals: goals,
 		time: bestTime
-	});
-}
+	};
+};
 
-function getTime(itemList, goalIds, cb) {
-	getFullRoute(itemList, goalIds, function(error, route) {
-		if(error) return cb(error);
-		cb(null, route.time);
-	});
-}
+CartesianRouter.prototype.getTime = function(goalIds) {
+	var route = getFullRoute(goalIds);
+	return route.time;
+};
 
-exports.getFullRoute = getFullRoute;
-exports.getTime = getTime;
+module.exports = CartesianRouter;

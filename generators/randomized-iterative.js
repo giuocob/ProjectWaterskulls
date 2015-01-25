@@ -1,6 +1,13 @@
-function getCard(router, itemList, seed, cb) {
-	if(typeof router.getTime != 'function') return cb(new Error('Invalid router'));
-	cb(new Error('Randomized iterative generator still being thought about, coming soon :)'));
-}
+var Generator = require('./generator');
+var util = require('util');
 
-exports.getCard = getCard;
+var RIGenerator = function(router) {
+	Generator.call(this, router);
+};
+util.inherits(RIGenerator, Generator);
+
+RIGenerator.prototype.getCard = function(rng) {
+	throw new Error('Randomized iterative generator still being thought about, coming soon :)');
+};
+
+module.exports = RIGenerator;
