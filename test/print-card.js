@@ -43,7 +43,7 @@ function run() {
 	var routerInstance = new Router(itemList);
 	var generatorInstance = new Generator(routerInstance);
 
-	var card = generatorInstance.getCard(seed);
+	var card = generatorInstance.getCard(rng);
 	return card;
 }
 
