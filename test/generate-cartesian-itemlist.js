@@ -24,6 +24,7 @@ function run(cb) {
 		var item, itemId;
 		do {
 			item = {
+				goal: true,
 				x: getX(),
 				y: getY()
 			};
@@ -42,7 +43,11 @@ function run(cb) {
 		itemListMap[itemId].id = idCounter.toString();
 		idCounter++;
 	});
-	fs.writeFile(path + '/' + filename, JSON.stringify(itemList,null,4), cb);
+	var obj = {
+		cardType: 'cartesian',
+		items: itemList
+	};
+	fs.writeFile(path + '/' + filename, JSON.stringify(obj,null,4), cb);
 }
 run(function(error) {
 	if(error) return console.log(error);

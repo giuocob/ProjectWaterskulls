@@ -12,7 +12,8 @@ util.inherits(CartesianRouter, Router);
 CartesianRouter.prototype.getFullRoute = function(goalIds) {
 	var itemList = this.itemList;
 	var itemMap = {};
-	itemList.forEach(function(item) {
+	if(itemList.cardType != 'cartesian') throw new Error('This router requires a cartesian card');
+	itemList.items.forEach(function(item) {
 		itemMap[item.id] = item;
 	});
 	// Travelling salesman! Yay! (We're getting tiny inputs, so just brute force it)

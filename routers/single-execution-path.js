@@ -9,6 +9,8 @@ util.inherits(SEPRouter, Router);
 
 SEPRouter.prototype.preprocessItemList = function() {
 	var itemList = this.itemList;
+	if(itemList.cardType != 'execution-paths') throw new Error('This router requires an execution-paths card');
+	itemList = itemList.items;
 	var validated = {};
 	if(!Array.isArray(itemList)) throw new Error('Did not understand item list: must be an array of goals');
 	for(var i=0;i<itemList.length;i++) {

@@ -1,54 +1,60 @@
-[
-	{
-		"id": "leavehouse",
-		"executionPaths": [
-			{
-				"time": 2.9
-			}
-		]
-	}, {
-		"id": "kokirisword",
-		"payload": {
-			"name": "Kokiri Sword"
-		},
-		"executionPaths": [
-			{
-				"dependencies": [ "leavehouse" ],
-				"time": 0.6
-			}
-		]
-	}, {
-		"id": "dekushield",
-		"payload": {
-			"name": "Deku Shield"
-		},
-		"executionPaths": [
-			{
-				"dependencies": [ "leavehouse" ],
-				"time": 1
-			}
-		]
-	}, {
-		"id": "enterdeku",
-		"payload": {
-			"name": "Enter Deku Tree"
-		},
-		"executionPaths": [
-			{
-				"dependencies": [ "kokirisword", "dekushield" ],
-				"time": 1.8
-			}
-		]
-	}, {
-		"id": "fairyslingshot",
-		"payload": {
-			"name": "Fairy Slingshot"
-		},
-		"executionPaths": [
-			{
-				"dependencies": [ "enterdeku" ],
-				"time": 2
-			}
-		]
-	}
-]
+{
+	"cardType": "execution-paths",
+	"items": [
+		{
+			"id": "leavehouse",
+			"executionPaths": [
+				{
+					"time": 2.9
+				}
+			]
+		}, {
+			"id": "kokirisword",
+			"goal": true,
+			"payload": {
+				"name": "Kokiri Sword"
+			},
+			"executionPaths": [
+				{
+					"dependencies": [ "leavehouse" ],
+					"time": 0.6
+				}
+			]
+		}, {
+			"id": "dekushield",
+			"goal": true,
+			"payload": {
+				"name": "Deku Shield"
+			},
+			"executionPaths": [
+				{
+					"dependencies": [ "leavehouse" ],
+					"time": 1
+				}
+			]
+		}, {
+			"id": "enterdeku",
+			"payload": {
+				"name": "Enter Deku Tree"
+			},
+			"executionPaths": [
+				{
+					"dependencies": [ "kokirisword", "dekushield" ],
+					"time": 1.8
+				}
+			]
+		}, {
+			"id": "fairyslingshot",
+			"goal": true,
+			"payload": {
+				"name": "Fairy Slingshot"
+			},
+			"executionPaths": [
+				{
+					"dependencies": [ "enterdeku" ],
+					"time": 2
+				}
+			]
+		}
+	]
+}
