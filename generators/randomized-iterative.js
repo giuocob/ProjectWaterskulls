@@ -4,10 +4,12 @@ var cardUtils = require('../lib/card-utils');
 
 var defaultBoardSize = 5;
 
-var RIGenerator = function(router) {
-	Generator.call(this, router);
+var RIGenerator = function(opts) {
+	Generator.call(this, opts);
 };
 util.inherits(RIGenerator, Generator);
+
+RIGenerator.requiresRouter = true;
 
 RIGenerator.prototype.getCard = function(rng, opts) {
 	if(!opts) opts = {};

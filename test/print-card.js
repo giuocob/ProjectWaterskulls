@@ -22,15 +22,20 @@ function run() {
 		throw new Error('Failed to load item list: ' + itemListName);
 	}
 	try {
-		Router = require('../routers/' + routerName);
-	} catch(e) {
-		throw new Error('Failed to load router: ' + routerName);
-	}
-	try {
 		Generator = require('../generators/' + generatorName);
 	} catch(e) {
 		throw new Error('Failed to load generator: ' + generatorName);
 	}
+	var generatorOpts = {};
+	if(Generator.requiresRouter) {
+		try {
+			Router = require('../routers/' + routerName);
+		} catch(e) {
+			throw new Error('Failed to load router: ' + routerName);
+		}
+		generatorOpts.router = new Router(itemList);
+	}
+	generatorOpts.itemList = itemList;
 
 	var seed = args.s || defaults.seed;
 	if(typeof seed != 'number') {
@@ -40,9 +45,7 @@ function run() {
 	seed = Math.floor(seed);
 	var rng = new RNG(seed);
 
-	var routerInstance = new Router(itemList);
-	var generatorInstance = new Generator(routerInstance);
-
+	var generatorInstance = new Generator(generatorOpts);
 	var card = generatorInstance.getCard(rng);
 	return card;
 }
