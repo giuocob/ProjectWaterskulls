@@ -7,12 +7,12 @@ Router.prototype.getItemList = function() {
 };
 
 // Override this
-Router.prototype.getFullRoute = function(goalIds, rng) {
+Router.prototype.getFullRoute = function(goalIds) {
 	throw new Error('getFullRoute not supported by this router');
 };
 
 // And this
-Router.prototype.getTime = function(goalIds, rng) {
+Router.prototype.getTime = function(goalIds) {
 	throw new Error('getTime not supported by this router');
 };
 
