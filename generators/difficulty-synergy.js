@@ -28,7 +28,7 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 	});
 	// Require a minimum list length of at least 3*size^2 to have some sort of hope that the algorithm will actually finish
 	// This means every difficulty tier has 3 bucketsor more, which is maybe enough?
-	if((3 * this.boardSize * this.boardSize) > goals.length) throw new Error('Goal list is too short for this board size');
+	if((3 * numSquares) > goals.length) throw new Error('Goal list is too short for this board size');
 	// Item difficulties are hard-coded as 1-25. Since we're supporting multiple board sizes, the easiest way will be to sort the goal list
 	// by difficulty, scale it linearly, and return requested slices.
 	goals.sort(function(a,b) {
@@ -46,9 +46,12 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 	var rowSquareMap = cardUtils.constructRowSquareMap(boardSize);
 	var squareRowMap = cardUtils.invertRowSquareMap(rowSquareMap);
 
-	// Keep trying to generate card until one sticks
+	// Keep trying to generate card until one sticks, or limit is reached
+	var remainingTries = 10;
 	var generatedCard;
 	while(!generatedCard) {
+		if(remainingTries <= 0) throw new Error('Number of allowed attempts for card generation exceeded');
+		remainingTries--;
 		generatedCard = generate();
 	}
 
