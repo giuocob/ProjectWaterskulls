@@ -8,7 +8,8 @@
 	},
 	"main": "./waterskulls.js",
 	"dependencies": {
-		"seedrandom": "2.3.11"
+		"seedrandom": "2.3.11",
+		"extend": "2.0.0"
 	},
 	"devDependencies": {
 		"minimist": "1.1.0"
