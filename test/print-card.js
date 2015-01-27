@@ -46,7 +46,11 @@ function run() {
 	var rng = new RNG(seed);
 
 	var generatorInstance = new Generator(generatorOpts);
-	var card = generatorInstance.getCard(rng);
+	var getCardOpts = {
+		returnFullGoals: true,
+		size: args.size || undefined
+	};
+	var card = generatorInstance.getCard(rng, getCardOpts);
 	return card;
 }
 

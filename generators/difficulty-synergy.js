@@ -2,6 +2,7 @@ var Generator = require('./generator');
 var util = require('util');
 var cardUtils = require('../lib/card-utils');
 var randomUtils = require('../lib/random-utils');
+var extend = require('extend');
 
 var defaultBoardSize = 5;
 
@@ -13,6 +14,9 @@ util.inherits(DSGenerator, Generator);
 
 DSGenerator.requiresRouter = false;
 
+// Allowed opts:
+//   size: Size of board between 3 and 7, inclusive. Default is 5.
+//   returnFullGoals: If true, ful goal data will be returned instead of the truncated versions.
 DSGenerator.prototype.getCard = function(rng, opts) {
 	if(!opts) opts = {};
 	var boardSize = opts.size || defaultBoardSize;
@@ -138,18 +142,56 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 			return false;
 		}
 
-		// Check a row in the current card state. Return true if there are no synergy conflicts, and false otherwise.
+		// Check a row in the current card state.
+		// Return true if there are no synergy conflicts, and false otherwise.
 		function checkRow(rowName) {
+			var presentTypes = {}, presentSubtypes = {};
+			var i, typeIndex, subtypeIndex;
+			var allowedChildGoals = boardSize-1;  // Disallow the case where all goals in a row are child only
+			for(i = 0; i < rowSquareMap[rowName].length; i++) {
+				var currentIndex = rowSquareMap[rowName][i];
+				var currentGoal = card[currentIndex];
+				if(!currentGoal) continue;
+				if(currentGoal.child) allowedChildGoals--;
+				// Add and check against goal's types and subtypes
+				if(currentGoal.subtypes) {
+					for(subtypeIndex = 0; subtypeIndex < currentGoal.subtypes.length; subtypeIndex++) {
+						var subtype = currentGoal.subtypes[subtypeIndex];
+						presentSubtypes[subtype] = true;
+					}
+				}
+				if(currentGoal.types) {
+					for(typeIndex = 0; typeIndex < currentGoal.types.length; typeIndex++) {
+						var type = currentGoal.types[typeIndex];
+						// Fail if there is a conflict either between types or between a type and subtype
+						if(presentTypes[type]) return false;
+						if(presentSubtypes[type]) return false;
+						presentTypes[type] = true;
+					}
+				}
+			}
+			if(allowedChildGoals < 0) return false;  // All-child row
 			return true;
 		}
 
 		// If we succeeded, return the card we got and outer loop will terminate
-		console.log(magicSquare);
 		if(okay) return card;
 	}
 
-	console.log(generatedCard);
-	process.exit();
+	// We got a card! Transform it to output format and return
+	var retCard = generatedCard.map(function(goal) {
+		if(opts.returnFullGoals) {
+			return extend(true, {}, goal);
+		} else {
+			return {
+				id: goal.id,
+				name: (goal.payload && goal.payload.name) || goal.id
+			};
+		}
+	});
+	return {
+		goals: retCard
+	};
 };
 
 module.exports = DSGenerator;
