@@ -3,6 +3,7 @@ var util = require('util');
 var cardUtils = require('../lib/card-utils');
 var randomUtils = require('../lib/random-utils');
 var extend = require('extend');
+var stableSort = require('stable');
 
 var defaultBoardSize = 5;
 
@@ -31,9 +32,14 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 	if((3 * numSquares) > goals.length) throw new Error('Goal list is too short for this board size');
 	// Item difficulties are hard-coded as 1-25. Since we're supporting multiple board sizes, the easiest way will be to sort the goal list
 	// by difficulty, scale it linearly, and return requested slices.
-	goals.sort(function(a,b) {
-		return (a.difficulty || 0) - (b.difficulty || 0);
+	goals = stableSort(goals, function(a,b) {
+		// For absolute sort, sort by difficulty, then id
+		var aDiff = a.difficulty || 0, bDiff = b.difficulty || 0;
+		if(aDiff < bDiff) return -1;
+		else if(aDiff > bDiff) return 1;
+		else return 0;
 	});
+
 	function getGoalsAtDifficulty(diff) {
 		// Diff between 1 and size^2
 		var blockSize = goals.length / (boardSize * boardSize);
