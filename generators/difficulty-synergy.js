@@ -101,10 +101,50 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 
 		// Return true if index was successfully populated, false otherwise
 		function populateIndex(indexToPopulate) {
+			var currentDifficulty = magicSquare[indexToPopulate];
+			// Allow difficulty bumps as long as they dont top the goal list
+			while(currentDifficulty <= numSquares) {
+				var candidateGoals = randomUtils.shuffle(getGoalsAtDifficulty(currentDifficulty), rng);
+				var candidateGoalIndex, rowNameIndex;
+				var goalFound = false;
+				for(candidateGoalIndex = 0; candidateGoalIndex < candidateGoals.length; candidateGoalIndex++) {
+					var candidateGoal = candidateGoals[candidateGoalIndex];
+					// Test-insert the selected goal into the card
+					card[indexToPopulate] = candidateGoal;
+					var goalConflicts = false;
+					// Now check all related rows
+					for(rowNameIndex = 0; rowNameIndex < (squareRowMap[indexToPopulate] || []).length; rowNameIndex++) {
+						var rowName = squareRowMap[indexToPopulate][rowNameIndex];
+						var rowIsOkay = checkRow(rowName);
+						if(!rowIsOkay) {
+							goalConflicts = true;
+							break;
+						}
+					}
+					if(!goalConflicts) {
+						// We got a goal! Accept it and terminate loop
+						goalFound = true;
+						break;
+					}
+				}
+				// If a goal was found, terminate loop. Otherwise, try next difficulty.
+				if(goalFound) {
+					return true;
+				} else {
+					currentDifficulty++;
+				}
+			}
+			// If we're here, goal selection topped out and we failed.
+			return false;
+		}
+
+		// Check a row in the current card state. Return true if there are no synergy conflicts, and false otherwise.
+		function checkRow(rowName) {
 			return true;
 		}
 
 		// If we succeeded, return the card we got and outer loop will terminate
+		console.log(magicSquare);
 		if(okay) return card;
 	}
 
