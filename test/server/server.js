@@ -15,25 +15,18 @@ app.get('/', function(req, res, next) {
 var randomUtils = require('../../lib/random-utils');
 var difficultySynergyGenerator = require('../../generators/difficulty-synergy');
 var bingoRenderer = require('./bingo-renderer');
+var waterskulls = require('../../waterskulls');
 
 // Display an old difficulty-synergy card.
 // Accepts size (3-7) and seed as optional parameters.
 app.get('/difficulty-synergy', function(req, res, next) {
-	var generatorParams = {};
-	var rng;
-	if(req.query.size) generatorParams.size = parseInt(req.query.size, 10);
-	if(req.query.seed !== undefined) {
-		rng = new randomUtils.RNG(parseInt(req.query.seed, 10));
-	} else {
-		rng = new randomUtils.RNG();
-	}
+	var params = {};
+	var seed, size;
+	if(req.query.size) params.size = parseInt(req.query.size, 10);
+	if(req.query.seed !== undefined) params.seed = req.query.seed;
 	var card;
 	try {
-		var itemList = require('../../itemlists/old-difficulty-synergy');
-		var generator = new difficultySynergyGenerator({
-			itemList: itemList
-		});
-		card = generator.getCard(rng, generatorParams);
+		card = waterskulls.generateDifficultySynergyCard(params);
 	} catch(error) {
 		return res.status(500).end(error.stack);
 	}
