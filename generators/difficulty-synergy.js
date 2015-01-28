@@ -166,6 +166,7 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 				if(currentGoal.subtypes) {
 					for(subtypeIndex = 0; subtypeIndex < currentGoal.subtypes.length; subtypeIndex++) {
 						var subtype = currentGoal.subtypes[subtypeIndex];
+						if(presentTypes[subtype]) return false;
 						presentSubtypes[subtype] = true;
 					}
 				}
