@@ -14,6 +14,7 @@ app.get('/', function(req, res, next) {
 
 var randomUtils = require('../../lib/random-utils');
 var difficultySynergyGenerator = require('../../generators/difficulty-synergy');
+var bingoRenderer = require('./bingo-renderer');
 
 // Display an old difficulty-synergy card.
 // Accepts size (3-7) and seed as optional parameters.
@@ -36,7 +37,11 @@ app.get('/difficulty-synergy', function(req, res, next) {
 	} catch(error) {
 		return res.status(500).end(error.stack);
 	}
-	res.status(200).end(JSON.stringify(card,null,4));
+	// Make pretty page
+	bingoRenderer.renderBingoPage(card, function(error, html) {
+		if(error) return res.status(500).end(error.stack);
+		res.send(html);
+	});
 });
 
 app.listen(app.get('port'));

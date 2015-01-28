@@ -199,6 +199,7 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 		}
 	});
 	return {
+		size: boardSize,
 		goals: retCard
 	};
 };
