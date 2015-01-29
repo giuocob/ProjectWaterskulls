@@ -86,3 +86,7 @@ exports.generateDifficultySynergyCard = function(opts) {
 	});
 	return card;
 };
+
+// Some stuff from randomUtils and cardUtils are useful externally, so export both
+exports.cardUtils = require('./lib/card-utils');
+exports.randomUtils = require('./lib/random-utils');
