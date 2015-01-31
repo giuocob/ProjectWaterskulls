@@ -200,6 +200,7 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 		}
 	});
 	return {
+		seed: rng.seed,
 		size: boardSize,
 		goals: retCard
 	};
