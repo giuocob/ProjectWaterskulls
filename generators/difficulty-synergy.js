@@ -22,7 +22,7 @@ DSGenerator.prototype.getCard = function(rng, opts) {
 	if(!opts) opts = {};
 	var boardSize = opts.size || defaultBoardSize;
 	var numSquares = boardSize * boardSize;
-	if(boardSize < 3 || boardSize > 7) throw new Error('Provided boardSize is out of range');
+	if(boardSize < 1 || boardSize > 7 || boardSize == 2) throw new Error('Provided boardSize is out of range');
 	var goals = this.itemList.items || [];
 	goals.filter(function(goalObj) {
 		return !!goalObj.goal;
